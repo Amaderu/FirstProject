@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 
 import java.util.Timer;
@@ -17,7 +18,7 @@ public class LoadScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_screen);
 
-        TimerTask MyTask = new TimerTask() {
+        /*TimerTask MyTask = new TimerTask() {
             @Override
             public void run() {
                 startActivity(new Intent(LoadScreen.this, Authorize.class));
@@ -25,7 +26,14 @@ public class LoadScreen extends AppCompatActivity {
             }
         };
         Timer MyTimer = new Timer();
-        MyTimer.schedule(MyTask,5000L);
+        MyTimer.schedule(MyTask,5000L);*/
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startActivity(new Intent(LoadScreen.this, Authorize.class));
+            }
+        },3000L);
     }
 
 

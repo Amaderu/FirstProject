@@ -50,7 +50,7 @@ public class Authorize extends AppCompatActivity {
                     @Override
                     public boolean onLongClick(View v) {
                         Toast toast = Toast.makeText(getApplicationContext(),
-                                "Union",
+                                "Long Click Union",
                                 Toast.LENGTH_SHORT);
                         toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();
