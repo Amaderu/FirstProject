@@ -22,4 +22,15 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
+    <style name="TextStyle" parent="@style/Widget.AppCompat.EditText">
+        <item name="android:textSize">20sp</item>
+        <item name="android:font">@font/titillium_web</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColorHint">@color/colorPrimary</item>
+        <item name="android:alpha">0.89</item>
+        <item name="android:colorAccent">@color/colorBlack</item>
+    </style>
+
 </resources>

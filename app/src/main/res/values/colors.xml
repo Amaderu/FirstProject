@@ -6,4 +6,5 @@
     <color name="colorPink">#E3359E</color>
     <color name="ColorIconGreen">#32CD32</color>
     <color name="colorBackground">#EEEEEE</color>
+    <color name="colorBlack">#000000</color>
 </resources>

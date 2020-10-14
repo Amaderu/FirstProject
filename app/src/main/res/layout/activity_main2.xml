@@ -5,104 +5,114 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity2">
+
     <ImageView
         android:id="@+id/rectangle1"
         android:layout_width="match_parent"
-        android:layout_height="226dp"
-        android:src="@drawable/rectangle_1"
+        android:layout_height="200dp"
+        android:background="#BB2C57"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:id="@+id/rectangle2"
         android:layout_width="match_parent"
-        android:layout_height="226dp"
-        android:src="@drawable/rectangle_2"
-        app:layout_constraintTop_toBottomOf="@+id/rectangle1"
-        app:layout_constraintBottom_toTopOf="@+id/rectangle3"/>
+        android:layout_height="200dp"
+        android:background="#4899E3"
+        app:layout_constraintBottom_toTopOf="@+id/rectangle3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rectangle1" />
 
     <ImageView
         android:id="@+id/rectangle3"
         android:layout_width="match_parent"
-        android:layout_height="226dp"
-        android:src="@drawable/rectangle_3"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+        android:layout_height="200dp"
+        android:background="#EB994D"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 
-    <ImageView
-        android:id="@+id/screen_bg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/windowAuth"
+        android:layout_width="716px"
+        android:layout_height="1482px"
         android:layout_margin="12dp"
-        android:src="@drawable/screen_bg"
+        android:alpha="0.9"
+        android:background="#EEEEEE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:alpha="0.9"/>
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/fieldFName"
-        android:layout_width="261dp"
-        android:layout_height="57dp"
-        android:hint="FirstName"
-        android:orientation="horizontal"
-        android:paddingVertical="12dp"
-        app:layout_constraintEnd_toEndOf="@+id/screen_bg"
-        app:layout_constraintStart_toStartOf="@+id/screen_bg"
-        app:layout_constraintTop_toTopOf="@+id/screen_bg"
-        android:layout_marginTop="600px"/>
-    <EditText
-        android:id="@+id/fieldSName"
-        android:layout_width="261dp"
-        android:layout_height="57dp"
-        android:hint="SecondName"
-        app:layout_constraintStart_toStartOf="@id/fieldFName"
-        app:layout_constraintTop_toBottomOf="@id/fieldFName"
-        android:layout_marginTop="1dp"
-        />
-    <EditText
-        android:id="@+id/fieldMail"
-        android:layout_width="261dp"
-        android:layout_height="57dp"
-        android:hint="E-mail"
-        app:layout_constraintStart_toStartOf="@id/fieldSName"
-        app:layout_constraintTop_toBottomOf="@id/fieldSName"
-        android:layout_marginTop="1dp"
-        />
-    <EditText
-        android:id="@+id/fieldPass"
-        android:layout_width="261dp"
-        android:layout_height="57dp"
-        android:hint="Password"
-        app:layout_constraintStart_toStartOf="@id/fieldMail"
-        app:layout_constraintTop_toBottomOf="@id/fieldMail"
-        android:layout_marginTop="1dp"
-        android:inputType="textPassword"
-        android:ems="10"
-        />
-    <EditText
-        android:id="@+id/fieldConPass"
-        android:layout_width="261dp"
-        android:layout_height="57dp"
-        android:hint="Confirm password"
-        app:layout_constraintStart_toStartOf="@id/fieldPass"
-        app:layout_constraintTop_toBottomOf="@id/fieldPass"
-        android:layout_marginTop="1dp"
-        android:inputType="textPassword"
-        />
-    <Button
-        android:id="@+id/sign_up"
-        android:layout_width="261dp"
-        android:layout_height="57dp"
-        android:text="Sigin UP"
-        app:layout_constraintTop_toBottomOf="@id/fieldConPass"
-        android:layout_marginTop="1dp"
-        app:layout_constraintStart_toStartOf="@id/screen_bg"
-        app:layout_constraintEnd_toEndOf="@id/screen_bg"
-        style="@style/ButtonStyle"
-        android:onClick="onClick"
-        />
+        <EditText
+            android:id="@+id/fieldFName"
+            style="@style/TextStyle"
+            android:layout_width="261dp"
+            android:layout_height="57dp"
+            android:layout_marginTop="150dp"
+            android:hint="FirstName"
+            android:paddingVertical="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <EditText
+            android:id="@+id/fieldSName"
+            style="@style/TextStyle"
+            android:layout_width="261dp"
+            android:layout_height="57dp"
+            android:hint="SecondName"
+            app:layout_constraintStart_toStartOf="@id/fieldFName"
+            app:layout_constraintTop_toBottomOf="@id/fieldFName"
+            tools:layout_marginTop="1dp" />
+
+        <EditText
+            android:id="@+id/fieldMail"
+            style="@style/TextStyle"
+            android:layout_width="261dp"
+            android:layout_height="57dp"
+            android:hint="E-mail"
+
+            app:layout_constraintStart_toStartOf="@id/fieldFName"
+            app:layout_constraintTop_toBottomOf="@id/fieldSName"
+            tools:layout_marginTop="1dp" />
+
+        <EditText
+            android:id="@+id/fieldPass"
+            style="@style/TextStyle"
+            android:layout_width="261dp"
+            android:layout_height="57dp"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword"
+
+            app:layout_constraintStart_toStartOf="@id/fieldFName"
+            app:layout_constraintTop_toBottomOf="@id/fieldMail"
+            tools:layout_marginTop="1dp" />
+
+        <EditText
+            android:id="@+id/fieldConPass"
+            style="@style/TextStyle"
+            android:layout_width="261dp"
+            android:layout_height="57dp"
+            android:hint="Confirm password"
+            android:inputType="textPassword"
+
+
+            app:layout_constraintStart_toStartOf="@id/fieldFName"
+            app:layout_constraintTop_toBottomOf="@id/fieldPass"
+            tools:layout_marginTop="1dp" />
+
+        <Button
+            android:id="@+id/sign_up"
+            style="@style/ButtonStyle"
+            android:layout_width="261dp"
+            android:layout_height="57dp"
+            android:onClick="confirmInput"
+            android:text="Sigin UP"
+            app:layout_constraintStart_toStartOf="@id/fieldFName"
+            app:layout_constraintTop_toBottomOf="@id/fieldConPass"
+            tools:layout_marginTop="40dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
