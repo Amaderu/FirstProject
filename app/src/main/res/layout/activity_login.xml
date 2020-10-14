@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity2">
-
+    tools:context=".LoginActivity">
     <ImageView
         android:id="@+id/rectangle1"
         android:layout_width="match_parent"
@@ -32,7 +31,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/windowReg"
+        android:id="@+id/windowAuth"
         android:layout_width="716px"
         android:layout_height="1482px"
         android:layout_margin="12dp"
@@ -43,27 +42,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/fieldFName"
-            style="@style/TextStyle"
-            android:layout_width="261dp"
-            android:layout_height="57dp"
-            android:layout_marginTop="150dp"
-            android:hint="FirstName"
-            android:paddingVertical="12dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/fieldSName"
-            style="@style/TextStyle"
-            android:layout_width="261dp"
-            android:layout_height="57dp"
-            android:hint="SecondName"
-            app:layout_constraintStart_toStartOf="@id/fieldFName"
-            app:layout_constraintTop_toBottomOf="@id/fieldFName"
-            tools:layout_marginTop="1dp" />
 
         <EditText
             android:id="@+id/fieldMail"
@@ -72,9 +50,11 @@
             android:layout_height="57dp"
             android:hint="E-mail"
 
-            app:layout_constraintStart_toStartOf="@id/fieldFName"
-            app:layout_constraintTop_toBottomOf="@id/fieldSName"
-            tools:layout_marginTop="1dp" />
+            android:layout_marginTop="150dp"
+            android:paddingVertical="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <EditText
             android:id="@+id/fieldPass"
@@ -85,21 +65,8 @@
             android:hint="Password"
             android:inputType="textPassword"
 
-            app:layout_constraintStart_toStartOf="@id/fieldFName"
+            app:layout_constraintStart_toStartOf="@id/fieldMail"
             app:layout_constraintTop_toBottomOf="@id/fieldMail"
-            tools:layout_marginTop="1dp" />
-
-        <EditText
-            android:id="@+id/fieldConPass"
-            style="@style/TextStyle"
-            android:layout_width="261dp"
-            android:layout_height="57dp"
-            android:hint="Confirm password"
-            android:inputType="textPassword"
-
-
-            app:layout_constraintStart_toStartOf="@id/fieldFName"
-            app:layout_constraintTop_toBottomOf="@id/fieldPass"
             tools:layout_marginTop="1dp" />
 
         <Button
@@ -107,11 +74,11 @@
             style="@style/ButtonStyle"
             android:layout_width="261dp"
             android:layout_height="57dp"
-            android:onClick="confirmInput"
-            android:text="Sigin UP"
-            app:layout_constraintStart_toStartOf="@id/fieldFName"
-            app:layout_constraintTop_toBottomOf="@id/fieldConPass"
+            android:text="Sigin IN"
+            app:layout_constraintStart_toStartOf="@id/fieldMail"
+            app:layout_constraintTop_toBottomOf="@id/fieldPass"
             tools:layout_marginTop="40dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

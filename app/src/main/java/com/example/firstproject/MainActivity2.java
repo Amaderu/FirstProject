@@ -155,7 +155,8 @@ public class MainActivity2 extends AppCompatActivity {
         if (!validateEmail() | !validateUsername() | !validatePassword() | !validateConPassword()) {
             return;
         }
-        startActivity(intent);
+        Intent auth = new Intent(this,LoginActivity.class);
+        startActivity(auth);
         finish();
 
     }
