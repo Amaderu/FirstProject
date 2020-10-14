@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegActivity">
+
+    <ImageView
+        android:id="@+id/rectangle1"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="#BB2C57"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/rectangle2"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="#4899E3"
+        app:layout_constraintBottom_toTopOf="@+id/rectangle3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rectangle1" />
+
+    <ImageView
+        android:id="@+id/rectangle3"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="#EB994D"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/windowReg"
+        android:layout_width="716px"
+        android:layout_height="1482px"
+        android:layout_margin="12dp"
+        android:alpha="0.9"
+        android:background="#EEEEEE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/fieldFName"
+            style="@style/TextStyle"
+            android:layout_width="261dp"
+            android:layout_height="57dp"
+            android:layout_marginTop="150dp"
+            android:hint="FirstName"
+            android:paddingVertical="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/fieldSName"
+            style="@style/TextStyle"
+            android:layout_width="261dp"
+            android:layout_height="57dp"
+            android:hint="SecondName"
+            app:layout_constraintStart_toStartOf="@id/fieldFName"
+            app:layout_constraintTop_toBottomOf="@id/fieldFName"
+            tools:layout_marginTop="1dp" />
+
+        <EditText
+            android:id="@+id/fieldMail"
+            style="@style/TextStyle"
+            android:layout_width="261dp"
+            android:layout_height="57dp"
+            android:hint="E-mail"
+
+            app:layout_constraintStart_toStartOf="@id/fieldFName"
+            app:layout_constraintTop_toBottomOf="@id/fieldSName"
+            tools:layout_marginTop="1dp" />
+
+        <EditText
+            android:id="@+id/fieldPass"
+            style="@style/TextStyle"
+            android:layout_width="261dp"
+            android:layout_height="57dp"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword"
+
+            app:layout_constraintStart_toStartOf="@id/fieldFName"
+            app:layout_constraintTop_toBottomOf="@id/fieldMail"
+            tools:layout_marginTop="1dp" />
+
+        <EditText
+            android:id="@+id/fieldConPass"
+            style="@style/TextStyle"
+            android:layout_width="261dp"
+            android:layout_height="57dp"
+            android:hint="Confirm password"
+            android:inputType="textPassword"
+
+
+            app:layout_constraintStart_toStartOf="@id/fieldFName"
+            app:layout_constraintTop_toBottomOf="@id/fieldPass"
+            tools:layout_marginTop="1dp" />
+
+        <Button
+            android:id="@+id/sign_up"
+            style="@style/ButtonStyle"
+            android:layout_width="261dp"
+            android:layout_height="57dp"
+            android:onClick="confirmInput"
+            android:text="Sigin UP"
+            app:layout_constraintStart_toStartOf="@id/fieldFName"
+            app:layout_constraintTop_toBottomOf="@id/fieldConPass"
+            tools:layout_marginTop="40dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,19 +6,19 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Patterns;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import java.util.regex.Pattern;
 
-public class MainActivity2 extends AppCompatActivity {
+public class RegActivity extends AppCompatActivity {
 
     private EditText textInputEmail;
     private EditText textInputUsername;
     private EditText textInputPassword;
     private EditText textInputConPassword;
+
+    public static String[] User1;
 
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^" +
@@ -34,7 +34,7 @@ public class MainActivity2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_reg);
         textInputEmail = findViewById(R.id.fieldMail);
         textInputUsername = findViewById(R.id.fieldFName);
         textInputPassword = findViewById(R.id.fieldPass);
@@ -111,24 +111,19 @@ public class MainActivity2 extends AppCompatActivity {
         }
     }
 
-    public void confirmI(View v) {
-        if (!validateEmail() | !validateUsername() | !validatePassword()) {
-            return;
-        }
-    }
 
     public void  confirmInput(View v){
         final EditText FName = findViewById(R.id.fieldFName);
         final EditText SName = findViewById(R.id.fieldSName);
         final EditText Mail = findViewById(R.id.fieldMail);
         final EditText Pass = findViewById(R.id.fieldPass);
-        final EditText ConPass = findViewById(R.id.fieldConPass);
 
-        Intent intent = new Intent(this,MainActivity.class);
+        /*Intent intent = new Intent(this,MainActivity.class);
         intent.putExtra("FirstName",FName.getText().toString());
         intent.putExtra("SecondName",SName.getText().toString());
         intent.putExtra("Mail",Mail.getText().toString());
-        String mail =Mail.getText().toString();
+        String mail =Mail.getText().toString();*/
+
         //Pattern pattern1 = Pattern.compile("([A-Za-z]+)(\\d*)(@mail\\.ru)");
         //Pattern pattern2 = Pattern.compile("([\\D]*)(@mail\\.ru)");
         //Patterns.EMAIL_ADDRESS.matcher(mail).matches();
@@ -152,10 +147,19 @@ public class MainActivity2 extends AppCompatActivity {
         if(passsword.equals(conPass) && !passsword.isEmpty() && !conPass.isEmpty())
             startActivity(intent);*/
 
+
+
         if (!validateEmail() | !validateUsername() | !validatePassword() | !validateConPassword()) {
             return;
         }
-        startActivity(intent);
+        User1=new String[4];
+        User1[0]=FName.getText().toString();
+        User1[1]=SName.getText().toString();
+        User1[2]=Mail.getText().toString();
+        User1[3]=Pass.getText().toString();
+        Intent auth = new Intent(this,LoginActivity.class);
+        //auth.putExtra("mail",User1);
+        startActivity(auth);
         finish();
 
     }

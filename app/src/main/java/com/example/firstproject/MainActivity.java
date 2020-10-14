@@ -15,12 +15,19 @@ public class MainActivity extends AppCompatActivity {
         textView.setTextSize(20);
         textView.setPadding(16, 16, 16, 16);
 
-        Bundle arguments = getIntent().getExtras();
-
+        /*Bundle arguments = getIntent().getExtras();
         if(arguments!=null){
             String firstName = arguments.getString("FirstName");
             String secondName = arguments.getString("SecondName");
             String mail = arguments.getString("Mail");
+            textView.setText("Name: " + firstName + "\nSecond N: " + secondName +
+                    "\nmail: " + mail);
+        }*/
+        String[] User = RegActivity.User1;
+        if(User!=null){
+            String firstName = User[0];
+            String secondName = User[1];
+            String mail = User[2];
             textView.setText("Name: " + firstName + "\nSecond N: " + secondName +
                     "\nmail: " + mail);
         }

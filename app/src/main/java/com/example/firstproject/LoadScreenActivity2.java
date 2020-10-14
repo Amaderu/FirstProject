@@ -16,7 +16,7 @@ public class LoadScreenActivity2 extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(LoadScreenActivity2.this, MainActivity2.class));
+                startActivity(new Intent(LoadScreenActivity2.this, RegActivity.class));
                 finish();
             }
         },3000L);
