@@ -4,24 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-<<<<<<< HEAD
 import android.view.View;
 import android.widget.EditText;
+import android.os.Handler;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText Mail;
     private EditText Password;
-=======
-import android.os.Handler;
 
-public class LoginActivity extends AppCompatActivity {
->>>>>>> origin/master
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-<<<<<<< HEAD
         Mail=(EditText) findViewById(R.id.fieldMail);
         String[] User = RegActivity.User1;
 
@@ -33,15 +28,12 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         /*Handler handler = new Handler();
-=======
         Handler handler = new Handler();
->>>>>>> origin/master
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
             }
-<<<<<<< HEAD
         },3000L);*/
     }
     private boolean validateUser(){
@@ -62,9 +54,4 @@ public class LoginActivity extends AppCompatActivity {
         finish();
 
     }
-
-=======
-        },3000L);
-    }
->>>>>>> origin/master
 }

@@ -13,12 +13,14 @@ import android.widget.Toast;
 
 import java.util.regex.Pattern;
 
-public class MainActivity2 extends AppCompatActivity {
+public class RegActivity extends AppCompatActivity {
 
     private EditText textInputEmail;
     private EditText textInputUsername;
     private EditText textInputPassword;
     private EditText textInputConPassword;
+
+    public static String[] User1;
 
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^" +
@@ -34,7 +36,7 @@ public class MainActivity2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_reg);
         textInputEmail = findViewById(R.id.fieldMail);
         textInputUsername = findViewById(R.id.fieldFName);
         textInputPassword = findViewById(R.id.fieldPass);
@@ -124,11 +126,11 @@ public class MainActivity2 extends AppCompatActivity {
         final EditText Pass = findViewById(R.id.fieldPass);
         final EditText ConPass = findViewById(R.id.fieldConPass);
 
-        Intent intent = new Intent(this,MainActivity.class);
+        /*Intent intent = new Intent(this,MainActivity.class);
         intent.putExtra("FirstName",FName.getText().toString());
         intent.putExtra("SecondName",SName.getText().toString());
         intent.putExtra("Mail",Mail.getText().toString());
-        String mail =Mail.getText().toString();
+        String mail =Mail.getText().toString();*/
         //Pattern pattern1 = Pattern.compile("([A-Za-z]+)(\\d*)(@mail\\.ru)");
         //Pattern pattern2 = Pattern.compile("([\\D]*)(@mail\\.ru)");
         //Patterns.EMAIL_ADDRESS.matcher(mail).matches();
@@ -155,7 +157,13 @@ public class MainActivity2 extends AppCompatActivity {
         if (!validateEmail() | !validateUsername() | !validatePassword() | !validateConPassword()) {
             return;
         }
-        startActivity(intent);
+        User1 = new String[4];
+        User1[0]=FName.getText().toString();
+        User1[1]=SName.getText().toString();
+        User1[2]=Mail.getText().toString();
+        User1[3]=Pass.getText().toString();
+        Intent auth = new Intent(this,LoginActivity.class);
+        startActivity(auth);
         finish();
 
     }

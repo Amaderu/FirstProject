@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity2"/>
+        <activity android:name=".RegActivity"/>
         <activity android:name=".LoadScreenActivity2" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,6 +23,7 @@
         <activity android:name=".MainActivity"/>
         <activity android:name=".Authorize"/>
         <activity android:name=".LoadScreen"/>
+        <activity android:name=".LoginActivity"/>
     </application>
 
 </manifest>
