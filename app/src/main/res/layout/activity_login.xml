@@ -77,8 +77,12 @@
             android:text="Sigin IN"
             app:layout_constraintStart_toStartOf="@id/fieldMail"
             app:layout_constraintTop_toBottomOf="@id/fieldPass"
+<<<<<<< HEAD
             tools:layout_marginTop="40dp"
             android:onClick="enter"/>
+=======
+            tools:layout_marginTop="40dp" />
+>>>>>>> origin/master
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
