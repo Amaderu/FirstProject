@@ -6,12 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.os.Handler;
+
 
 public class LoginActivity extends AppCompatActivity {
     private EditText Mail;
     private EditText Password;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +34,12 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
             }
         },3000L);*/
+
+        Password=(EditText) findViewById(R.id.fieldPass);
+        if(User!=null){
+            String pass = User[3];
+            Password.setText(pass);
+        }
     }
     private boolean validateUser(){
         String[] user = RegActivity.User1;
@@ -46,12 +51,12 @@ public class LoginActivity extends AppCompatActivity {
         }
         return true;
     }
+
+
     public void enter(View v){
-        if(!validateUser())
-                return;
+        if(!validateUser()) return;
         Intent main = new Intent(this,MainActivity.class);
         startActivity(main);
         finish();
-
     }
 }
