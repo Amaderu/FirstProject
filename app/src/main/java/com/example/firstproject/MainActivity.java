@@ -3,28 +3,32 @@ package com.example.firstproject;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Scanner;
-
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     int wrapContent = LinearLayout.LayoutParams.WRAP_CONTENT;
     TextView textView;
+    View.OnClickListener oclBtnGet;
+    EditText search;
+    View.OnClickListener oclBtnPost = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            requestPostToSite();
+        }
+    };
+    String changUser="Amaderu";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,57 +45,80 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(
                 wrapContent, wrapContent);
 
+        search = new EditText(this);
+        layout.addView(search,-1,150);
+
+        int btnGravity = Gravity.START;
+        lParams.gravity = btnGravity;
+
+        Button btnGet = new Button(this);
+        btnGet.setText("Get");
+
+        oclBtnGet = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestGetToSite(search.getText().toString());
+            }
+        };
+
+        btnGet.setOnClickListener(oclBtnGet);
+
+        Button btnPost = new Button(this);
+        btnPost.setText("Post "+"User2");
+
+        LinearLayout.LayoutParams lParams2 = new LinearLayout.LayoutParams(
+                wrapContent, wrapContent);
+        lParams2.gravity=Gravity.END;
+        btnPost.setOnClickListener(oclBtnPost);
+
+        LinearLayout Button_layout = new LinearLayout(this);
+        Button_layout.setOrientation(LinearLayout.HORIZONTAL);
+        Button btnPut = new Button(this);
+        btnPut.setText("Put "+"");
+        btnPut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestPutToSite(search.getText().toString(),createBody(changUser));
+            }
+        });
+
+        Button btnDel = new Button(this);
+        btnDel.setText("Del "+"_");
+        btnDel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestDelToSite(search.getText().toString());
+            }
+        });
+
+        Button_layout.addView(btnGet, lParams);
+        Button_layout.addView(btnPost, lParams2);
+        Button_layout.addView(btnPut, lParams);
+        Button_layout.addView(btnDel, lParams);
+        layout.addView(Button_layout,-1,wrapContent);
+
+
+
         textView = new TextView(this);
         textView.setTextSize(20);
         textView.setPadding(16, 16, 16, 16);
+        textView.setText("Data");
         textView.setLayoutParams(lParams);
         layout.addView(textView, lParams);
 
-
-        int btnGravity = Gravity.LEFT;
-        lParams.gravity = btnGravity;
-
-        Button button = new Button(this);
-        button.setText("Retry");
-        View.OnClickListener oclBtnOk = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Меняем текст в TextView (tvOut)
-                requestToSite("user1");
-            }
-        };
-        button.setOnClickListener(oclBtnOk);
-        layout.addView(button, lParams);
-
-
-        /*Bundle arguments = getIntent().getExtras();
-        if(arguments!=null){
-            String firstName = arguments.getString("FirstName");
-            String secondName = arguments.getString("SecondName");
-            String mail = arguments.getString("Mail");
-            textView.setText("Name: " + firstName + "\nSecond N: " + secondName +
-                    "\nmail: " + mail);
-        }*/
-        String[] User = RegActivity.User1;
-        if(User!=null){
-            String firstName = User[0];
-            String secondName = User[1];
-            String mail = User[2];
-            textView.setText("Name: " + firstName + "\nSecond N: " + secondName +
-                    "\nmail: " + mail+"\npassword: " + User[3]);
-        }
         setContentView(layout);
         //setContentView(textView);
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                requestToSite("Amaderu");
+                requestGetToSite("Test_layla");
             }
         },1500L);
 
     }
-    public void requestToSite(String username){
+
+    public void requestGetToSite(final String username){
         ApiAdd.getInstance()
                 .getApi()
                 .getUser(username)
@@ -108,94 +135,26 @@ public class MainActivity extends AppCompatActivity {
                             String pass = postModel.getPassword();
                             String phone = postModel.getPhone();
                             int userstat = postModel.getUserStatus();
-                            //textView.setText("Name: " + firstName + "\nSecond N: " + secondName +"\nmail: " + mail+"\npassword: " + User[3]);
 
-                            String string = "id: "+id+"\n username: "+userName+"\n  firstName: "+firstName+"\n  lastName: "+lastName+"\n  " +
-                                    "email: "+mail+"\n  password: "+pass+"\n  phone: "+phone+"\n  userStatus: "+userstat+"\n";
+                            String string = "id: "+id+"\nusername: "+userName+"\nfirstName: "+firstName+"\nlastName: "+lastName+"\n" +
+                                    "email: "+mail+"\npassword: "+pass+"\nphone: "+phone+"\nuserStatus: "+userstat+"\n";
                             textView.setText(string);
-                            //Toast.makeText(MainActivity.this, postModel.getFirstName().toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, response.raw().toString(), Toast.LENGTH_SHORT).show();
                         } else {
-                            Log.e("Retrofi2","Error");
+                            //Log.e("Retrofi2","Error");
+                            Toast.makeText(MainActivity.this,"User "+"\""+username+"\""+" not found",(int)0).show();
+                            Toast.makeText(MainActivity.this, response.raw().toString(), Toast.LENGTH_SHORT).show();
                         }
-                        //PostModel postModel = response.body();
-                        //Toast.makeText(LoginActivity.this, postModel.getFirstName().toString(), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onFailure(@NonNull Call<PostModel.Swagger> call, @NonNull Throwable t) {
                         Toast.makeText(MainActivity.this, "An error occurred during networking", Toast.LENGTH_SHORT).show();
                         Toast.makeText(MainActivity.this, "Fail", Toast.LENGTH_SHORT).show();
+
                         t.printStackTrace();
                     }
                 });
-        /*ApiAdd.getInstance()
-                .getApi()
-                .getPost(1)
-                .enqueue(new Callback<PostModel.Post>() {
-                    @Override
-                    public void onResponse(@NonNull Call<PostModel.Post> call, @NonNull retrofit2.Response<PostModel.Post> response) {
-                        if (response.isSuccessful()) {
-                            PostModel.Post post = response.body();
-                            Toast.makeText(LoginActivity.this, Integer.toString(post.getId()), Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(LoginActivity.this, Integer.toString(response.code()), Toast.LENGTH_SHORT).show();
-                        }
-                        //PostModel postModel = response.body();
-                        //Toast.makeText(LoginActivity.this, postModel.getFirstName().toString(), Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Call<PostModel.Post> call, @NonNull Throwable t) {
-                        Toast.makeText(LoginActivity.this, "An error occurred during networking", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(LoginActivity.this, "Fail", Toast.LENGTH_SHORT).show();
-                        t.printStackTrace();
-                    }
-                });*/
-
-        /*ApiAdd.getInstance()
-                .getApi()
-                .createUser(Add)
-                .enqueue(new Callback<PostModel.Post>() {
-                    @Override
-                    public void onResponse(@NonNull Call<PostModel.Post> call, @NonNull retrofit2.Response<PostModel.Post> response) {
-                        if (response.isSuccessful()) {
-                            PostModel.Post post = response.body();
-                            Toast.makeText(LoginActivity.this, Integer.toString(post.getId()), Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(LoginActivity.this, Integer.toString(response.code()), Toast.LENGTH_SHORT).show();
-                        }
-                        //PostModel postModel = response.body();
-                        //Toast.makeText(LoginActivity.this, postModel.getFirstName().toString(), Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Call<PostModel.Post> call, @NonNull Throwable t) {
-                        Toast.makeText(LoginActivity.this, "An error occurred during networking", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(LoginActivity.this, "Fail", Toast.LENGTH_SHORT).show();
-                        t.printStackTrace();
-                    }
-                });*/
-
-
-        /*try {
-            ApiAdd.getApi().getData("Amaderu").execute();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        ApiAdd.getApi().getData("Amaderu").enqueue(new Callback<List<PostModel>>() {
-            @Override
-            public void onResponse(Call<List<PostModel>> call, retrofit2.Response<List<PostModel>> response) {
-
-                Toast.makeText(LoginActivity.this, response.body().toString(), Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(Call<List<PostModel>> call, Throwable t) {
-                Toast.makeText(LoginActivity.this, "An error occurred during networking", Toast.LENGTH_SHORT).show();
-            }
-        });*/
-
         /*try {
             Scanner scanner = new Scanner(new URL("https://petstore.swagger.io/v2/user/Amaderu").openStream());
             String response = scanner.useDelimiter("\\Z").next();
@@ -207,8 +166,104 @@ public class MainActivity extends AppCompatActivity {
         }*/
 
     }
-    public void autoUser(PostModel.Swagger user){
+    public void requestPostToSite(){
+        ApiAdd.getInstance()
+                .getApi()
+                .createUser(createBody("user2"))
+                .enqueue(new Callback<PostModel.Swagger>() {
+
+                    @Override
+                    public void onResponse(Call<PostModel.Swagger> call, Response<PostModel.Swagger> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(MainActivity.this, "Succsess sending", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, response.raw().toString(), Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Toast.makeText(MainActivity.this, "Failed sending", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, response.raw().toString(), Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<PostModel.Swagger> call, Throwable t) {
+                        Toast.makeText(MainActivity.this, "An error occurred during networking", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Fail", Toast.LENGTH_SHORT).show();
+                        t.printStackTrace();
+                    }
+                });
+    }
+    public void requestPutToSite(final String username, PostModel.Swagger user){
+        ApiAdd.getInstance()
+                .getApi()
+                .putUser(username,createBody(user.getUsername()))
+                .enqueue(new Callback<PostModel.Swagger>() {
+
+                    @Override
+                    public void onResponse(Call<PostModel.Swagger> call, Response<PostModel.Swagger> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(MainActivity.this, "Succsess update", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, response.raw().toString(), Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Toast.makeText(MainActivity.this, "Failed upate", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, response.raw().toString(), Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<PostModel.Swagger> call, Throwable t) {
+                        Toast.makeText(MainActivity.this, "An error occurred during networking", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Fail", Toast.LENGTH_SHORT).show();
+                        t.printStackTrace();
+                    }
+                });
+    }
+    public void requestDelToSite(final String username){
+        ApiAdd.getInstance()
+                .getApi()
+                .delUser(username)
+                .enqueue(new Callback<PostModel.Swagger>() {
+
+                    @Override
+                    public void onResponse(Call<PostModel.Swagger> call, Response<PostModel.Swagger> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(MainActivity.this, "Succsess Delete", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, response.raw().toString(), Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Toast.makeText(MainActivity.this, "Failed Delete", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, response.raw().toString(), Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<PostModel.Swagger> call, Throwable t) {
+                        Toast.makeText(MainActivity.this, "An error occurred during networking", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Fail", Toast.LENGTH_SHORT).show();
+                        t.printStackTrace();
+                    }
+                });
+    }
+
+    public PostModel.Swagger createBody(String userName){
+        PostModel.Swagger user = new PostModel.Swagger();
+        user.setId(778);
+        user.setUsername(userName);
+        user.setFirstName("user2");
+        user.setLastName("sd");
+        user.setEmail("edfyu@gmail.com");
+        user.setPassword("qeqwe");
+        user.setPhone("sad");
+        user.setUserStatus(1);
+        return user;
+
+    }
+    public void createBody(PostModel.Swagger user){
         user.setId(1);
+        user.setUsername("user2");
         user.setFirstName("ad");
         user.setLastName("sd");
         user.setEmail("edfyu@gmail.com");
