@@ -1,16 +1,19 @@
 package com.example.firstproject;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.firstproject.api.PetResponse;
 import com.example.firstproject.api.TagsItem;
@@ -20,6 +23,7 @@ import java.util.List;
 public class programmAdapter extends RecyclerView.Adapter<programmAdapter.ViewHolder> {
     Context context;
     List<PetResponse> pets;
+    String URL;
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView rowCategoryName;
@@ -61,9 +65,22 @@ public class programmAdapter extends RecyclerView.Adapter<programmAdapter.ViewHo
         //Glide.with(context).load(pets.get(position).getPhotoUrls().get(0)).into(holder.rowImage); //почти
 
         //setTooltipText("@tools:sample/avatars[2]");
-        Glide.with(context).asBitmap().
-                load(pets.get(position).getPhotoUrls().get(0))
-                .apply(new RequestOptions().error(R.mipmap.ic_launcher_round).override(250,250)).into(holder.rowImage);
+        if(pets.get(position).getPhotoUrls().isEmpty()){
+            URL ="";
+            Glide.with(context).load(R.mipmap.ic_launcher_round)
+                    .apply(new RequestOptions().error(R.mipmap.ic_launcher_round).override(250, 250)).into(holder.rowImage);
+        }
+        else if(!pets.get(position).getPhotoUrls().isEmpty()){
+            try {
+                URL =pets.get(position).getPhotoUrls().get(0);
+                Glide.with(context).asBitmap()
+                        .load(URL)
+                        .apply(new RequestOptions().error(R.mipmap.ic_launcher_round).override(250, 250)).into(holder.rowImage);
+            } catch (Exception e) {
+                Toast.makeText(context, "fail whith upload image", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }
 
         holder.rowStatus.setText("Status: "+pets.get(position).getStatus());
         final List<TagsItem> tags=pets.get(position).getTags();
