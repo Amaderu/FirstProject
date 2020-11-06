@@ -1,7 +1,9 @@
 package com.example.firstproject;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,12 +15,17 @@ import android.widget.Toast;
 
 import java.util.regex.Pattern;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class RegActivity extends AppCompatActivity {
 
     private EditText textInputEmail;
     private EditText textInputUsername;
     private EditText textInputPassword;
     private EditText textInputConPassword;
+    boolean acessRegist=false;
 
     public static String[] User1;
 
@@ -38,19 +45,21 @@ public class RegActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reg);
         textInputEmail = findViewById(R.id.fieldMail);
-        textInputUsername = findViewById(R.id.fieldFName);
+        textInputUsername = findViewById(R.id.fieldUsername);
         textInputPassword = findViewById(R.id.fieldPass);
         textInputConPassword =findViewById(R.id.fieldConPass);
         auto();
 
     }
     private void auto(){
+        final EditText Username = findViewById(R.id.fieldUsername);
         final EditText FName = findViewById(R.id.fieldFName);
         final EditText SName = findViewById(R.id.fieldSName);
         final EditText Mail = findViewById(R.id.fieldMail);
         final EditText Pass = findViewById(R.id.fieldPass);
         final EditText ConPass = findViewById(R.id.fieldConPass);
 
+        Username.setText("Amaderu");
         FName.setText("Amaderu");
         SName.setText("454");
         Mail.setText("Qwe@mail.com");
@@ -120,55 +129,93 @@ public class RegActivity extends AppCompatActivity {
     }
 
     public void  confirmInput(View v){
+        final EditText Username = findViewById(R.id.fieldUsername);
         final EditText FName = findViewById(R.id.fieldFName);
         final EditText SName = findViewById(R.id.fieldSName);
         final EditText Mail = findViewById(R.id.fieldMail);
         final EditText Pass = findViewById(R.id.fieldPass);
-        final EditText ConPass = findViewById(R.id.fieldConPass);
-
-        /*Intent intent = new Intent(this,MainActivity.class);
-        intent.putExtra("FirstName",FName.getText().toString());
-        intent.putExtra("SecondName",SName.getText().toString());
-        intent.putExtra("Mail",Mail.getText().toString());
-        String mail =Mail.getText().toString();*/
-        //Pattern pattern1 = Pattern.compile("([A-Za-z]+)(\\d*)(@mail\\.ru)");
-        //Pattern pattern2 = Pattern.compile("([\\D]*)(@mail\\.ru)");
-        //Patterns.EMAIL_ADDRESS.matcher(mail).matches();
-        //boolean bmail = mail.matches(pattern1.toString());
-
-
-        /*if(!Patterns.EMAIL_ADDRESS.matcher(mail).matches()){
-            Toast toast = Toast.makeText(getApplicationContext(), "НЕ правильно",
-                    Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
-            if(Mail.getText().length()==0)
-                Mail.setHintTextColor(Color.RED);
-            else Mail.setTextColor(Color.RED);
-            return;
-        }
-        Mail.setHintTextColor(Color.BLACK);
-        Mail.setTextColor(Color.BLACK);
-        String passsword=Pass.getText().toString();
-        String conPass=ConPass.getText().toString();
-        if(passsword.equals(conPass) && !passsword.isEmpty() && !conPass.isEmpty())
-            startActivity(intent);*/
+        //final EditText ConPass = findViewById(R.id.fieldConPass);
 
         if (!validateEmail() | !validateUsername() | !validatePassword() | !validateConPassword()) {
             return;
         }
-        User1 = new String[4];
+        requestGetToSite(Username.getText().toString());
+        if(!acessRegist) return;
+        final PostModel.Swagger user = new PostModel.Swagger();
+        user.setId(0);
+        user.setUsername(Username.getText().toString());
+        user.setFirstName(FName.getText().toString());
+        user.setLastName(SName.getText().toString());
+        user.setEmail(Mail.getText().toString());
+        user.setPassword(Pass.getText().toString());
+        user.setPhone("");
+        user.setUserStatus(1);
+        requestPostToSite(user);
+        /*User1 = new String[4];
         User1[0]=FName.getText().toString();
         User1[1]=SName.getText().toString();
         User1[2]=Mail.getText().toString();
-        User1[3]=Pass.getText().toString();
-        Intent auth = new Intent(this,LoginActivity.class);
-        startActivity(auth);
-        finish();
+        User1[3]=Pass.getText().toString();*/
 
+        /*try {
+            Scanner scanner = new Scanner(new URL("https://petstore.swagger.io/v2/user/Amaderu").openStream());
+            String response = scanner.useDelimiter("\\Z").next();
+            textView.setText(response);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
     }
 
+    public void requestGetToSite(final String username) {
+        ApiAdd.getInstance().getApi().getUser(username).enqueue(new Callback<PostModel.Swagger>() {
+            @Override
+            public void onResponse(Call<PostModel.Swagger> call, Response<PostModel.Swagger> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(RegActivity.this, "This user is exist", (int) 0).show();
+                    acessRegist = false;
+                } else {
+                    acessRegist = true;
+                }
+            }
 
+            @Override
+            public void onFailure(Call<PostModel.Swagger> call, Throwable t) {
+                Toast.makeText(RegActivity.this, "An error occurred during networking", (int) 0).show();
+                acessRegist = false;
+                t.printStackTrace();
+            }
+        });
+    }
+    public void requestPostToSite(PostModel.Swagger user) {
+        ApiAdd.getInstance()
+                .getApi()
+                .createUser(user)
+                .enqueue(new Callback<PostModel.Swagger>() {
+
+                    @Override
+                    public void onResponse(Call<PostModel.Swagger> call, Response<PostModel.Swagger> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(RegActivity.this, "Succsess registration", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegActivity.this, response.raw().toString(), Toast.LENGTH_SHORT).show();
+                            startActivity( new Intent(RegActivity.this,LoginActivity.class));
+                            finish();
+                        } else {
+                            Toast.makeText(RegActivity.this, "Failed registration", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegActivity.this, response.raw().toString(), Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<PostModel.Swagger> call, Throwable t) {
+                        Toast.makeText(RegActivity.this, "An error occurred during networking", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegActivity.this, "Fail", Toast.LENGTH_SHORT).show();
+                        t.printStackTrace();
+                    }
+                });
+    }
     public void Checking(EditText EdT){
         if(EdT.getText().length()==0)
             EdT.setHintTextColor(Color.RED);

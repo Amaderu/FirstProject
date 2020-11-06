@@ -44,16 +44,27 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/fieldFName"
+            android:id="@+id/fieldUsername"
             style="@style/TextStyle"
             android:layout_width="261dp"
             android:layout_height="57dp"
-            android:layout_marginTop="150dp"
-            android:hint="FirstName"
+            android:layout_marginTop="120dp"
+            android:hint="Username"
             android:paddingVertical="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/fieldFName"
+            style="@style/TextStyle"
+            android:layout_width="261dp"
+            android:layout_height="57dp"
+            android:hint="FirstName"
+            app:layout_constraintStart_toStartOf="@id/fieldUsername"
+            app:layout_constraintTop_toBottomOf="@id/fieldUsername"
+            tools:layout_marginTop="1dp" />
+
 
         <EditText
             android:id="@+id/fieldSName"
@@ -71,7 +82,6 @@
             android:layout_width="261dp"
             android:layout_height="57dp"
             android:hint="E-mail"
-
             app:layout_constraintStart_toStartOf="@id/fieldFName"
             app:layout_constraintTop_toBottomOf="@id/fieldSName"
             tools:layout_marginTop="1dp" />

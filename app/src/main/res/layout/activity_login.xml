@@ -44,11 +44,11 @@
 
 
         <EditText
-            android:id="@+id/fieldMail"
+            android:id="@+id/fieldUsername"
             style="@style/TextStyle"
             android:layout_width="261dp"
             android:layout_height="57dp"
-            android:hint="E-mail"
+            android:hint="Username"
 
             android:layout_marginTop="150dp"
             android:paddingVertical="12dp"
@@ -65,8 +65,8 @@
             android:hint="Password"
             android:inputType="textPassword"
 
-            app:layout_constraintStart_toStartOf="@id/fieldMail"
-            app:layout_constraintTop_toBottomOf="@id/fieldMail"
+            app:layout_constraintStart_toStartOf="@id/fieldUsername"
+            app:layout_constraintTop_toBottomOf="@id/fieldUsername"
             tools:layout_marginTop="1dp" />
 
         <Button
@@ -75,7 +75,7 @@
             android:layout_width="261dp"
             android:layout_height="57dp"
             android:text="Sigin IN"
-            app:layout_constraintStart_toStartOf="@id/fieldMail"
+            app:layout_constraintStart_toStartOf="@id/fieldPass"
             app:layout_constraintTop_toBottomOf="@id/fieldPass"
             tools:layout_marginTop="40dp"
             android:onClick="enter"/>
