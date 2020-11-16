@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.Gravity;
@@ -151,6 +152,7 @@ public class RegActivity extends AppCompatActivity {
         user.setPhone("");
         user.setUserStatus(1);
         requestPostToSite(user);
+        if(!acessRegist) return;
         /*User1 = new String[4];
         User1[0]=FName.getText().toString();
         User1[1]=SName.getText().toString();
@@ -166,6 +168,8 @@ public class RegActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }*/
+        startActivity( new Intent(RegActivity.this,LoginActivity.class));
+        finish();
     }
 
     public void requestGetToSite(final String username) {
@@ -199,11 +203,11 @@ public class RegActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             Toast.makeText(RegActivity.this, "Succsess registration", Toast.LENGTH_SHORT).show();
                             Toast.makeText(RegActivity.this, response.raw().toString(), Toast.LENGTH_SHORT).show();
-                            startActivity( new Intent(RegActivity.this,LoginActivity.class));
-                            finish();
+                            acessRegist = true;
                         } else {
                             Toast.makeText(RegActivity.this, "Failed registration", Toast.LENGTH_SHORT).show();
                             Toast.makeText(RegActivity.this, response.raw().toString(), Toast.LENGTH_SHORT).show();
+                            acessRegist = false;
                         }
 
                     }

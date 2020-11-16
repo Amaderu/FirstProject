@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">FirstProject</string>
+    <string name="loginActivity">Авторизация</string>
+    <string name="channel_name">User1</string>
+    <string name="channel_description">Notification chanel fo user1</string>
 </resources>

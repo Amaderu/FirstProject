@@ -1,8 +1,15 @@
 package com.example.firstproject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -17,6 +24,10 @@ public class LoginActivity extends AppCompatActivity {
     private EditText Username;
     private EditText Password;
     boolean verfy=false;
+    // Идентификатор уведомления
+    private int NOTIFY_ID = 101;
+    // Идентификатор канала
+    private static String CHANNEL_ID = String.valueOf(R.string.channel_name);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +64,12 @@ public class LoginActivity extends AppCompatActivity {
         ApiAdd.getInstance().getApi().getUser(Username.getText().toString()).enqueue(new Callback<PostModel.Swagger>() {
             @Override
             public void onResponse(Call<PostModel.Swagger> call, Response<PostModel.Swagger> response) {
-                if (response.isSuccessful()&&response.body().getPassword().equals(Password.getText().toString())) {
-                    Toast.makeText(LoginActivity.this, "Success log in", (int) 0).show();
-                    verfy = true;
+                if (response.isSuccessful()) {
+                    if(response.body().getPassword().equals(Password.getText().toString())){
+                        Toast.makeText(LoginActivity.this, "Success log in", (int) 0).show();
+                        verfy = true;
+                    }
+
                 }
                 else{
                     Username.setError("Invalid");
@@ -70,6 +84,8 @@ public class LoginActivity extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
+
+        verfy = true;// опять не работает swagger
         if(!verfy){
             return false;
         }
@@ -79,7 +95,35 @@ public class LoginActivity extends AppCompatActivity {
 
     public void enter(View v){
         if(!validateUser()) return;
-        startActivity(new Intent(this,MainActivity.class));
+        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+        Intent notificationIntent = new Intent(LoginActivity.this, MainActivity.class);
+        createNotificationChannel();
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(LoginActivity.this,
+                0, notificationIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);//FLAG_CANCEL_CURRENT
+        createNotificationChannel();
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,CHANNEL_ID)
+                        .setSmallIcon(R.mipmap.ic_launcher_round)
+                        .setLargeIcon(BitmapFactory.decodeResource(getResources(),
+                                R.mipmap.ic_launcher_round))
+                        .setContentTitle("Авторизация")
+                        .setContentText("Успешная авторизация")
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .addAction(R.mipmap.btnunion,"Открыть",pendingIntent);
+
+        Notification notification = builder.build();
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                //NotificationManagerCompat.from(LoginActivity.this);
+
+        notificationManager.notify(NOTIFY_ID++,notification);
+
+        startActivity(intent);
         finish();
     }
 
@@ -101,6 +145,24 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             Password.setError(null);
             return true;
+        }
+    }
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+
+            NotificationChannel defaultChannel = notificationManager.getNotificationChannel(CHANNEL_ID);
+            if(defaultChannel==null) {
+                CharSequence name = getString(R.string.channel_name);
+                String description = getString(R.string.channel_description);
+                int importance = NotificationManager.IMPORTANCE_DEFAULT;
+                NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+                channel.setDescription(description);
+
+                notificationManager.createNotificationChannel(channel);
+            }
         }
     }
 }

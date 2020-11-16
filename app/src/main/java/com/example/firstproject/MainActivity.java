@@ -2,7 +2,16 @@ package com.example.firstproject;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
@@ -18,6 +27,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
+
+    // Идентификатор уведомления
+    private int NOTIFY_ID = 201;
+    // Идентификатор канала
+    private static String CHANNEL_ID = String.valueOf(R.string.channel_name);
+
     int wrapContent = LinearLayout.LayoutParams.WRAP_CONTENT;
     TextView textView;
     View.OnClickListener oclBtnGet;
@@ -91,10 +106,52 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button btnNotify = new Button(this);
+        btnNotify.setText("Note");
+        btnNotify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent notificationIntent = new Intent(MainActivity.this, MainActivity.class);
+
+                PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this,
+                        0, notificationIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT);//FLAG_CANCEL_CURRENT
+                NotificationManager notificationManager =
+                        (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+                NotificationCompat.Builder builder =
+                        new NotificationCompat.Builder(MainActivity.this,CHANNEL_ID)
+                                .setSmallIcon(R.mipmap.ic_launcher_round)
+                                .setContentTitle("Авторизация")
+                                .setContentText("Успешная авторизация")
+                                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                .setContentIntent(pendingIntent)
+                                .setAutoCancel(true);
+                //.addAction(R.mipmap.btnunion,"Открыть",pendingIntent);
+                Notification notification = builder.build();
+
+                Notification notification1 = new Notification.Builder(MainActivity.this,CHANNEL_ID)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle("Title")
+                        .setContentText("Notification text")
+                        .setAutoCancel(true).build();
+
+
+                /*NotificationManagerCompat notificationManager =
+                        //(NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                NotificationManagerCompat.from(MainActivity.this);*/
+
+                notificationManager.notify(NOTIFY_ID++,notification);
+                notificationManager.notify(1,notification1);
+            }
+        });
+
         Button_layout.addView(btnGet, lParams);
         Button_layout.addView(btnPost, lParams2);
         Button_layout.addView(btnPut, lParams);
+        Button_layout.addView(btnNotify,lParams);
         Button_layout.addView(btnDel, lParams);
+
         layout.addView(Button_layout,-1,wrapContent);
 
 
@@ -270,4 +327,6 @@ public class MainActivity extends AppCompatActivity {
         user.setPassword("qeqwe");
         user.setPhone("sad");
     }
+
+
 }
