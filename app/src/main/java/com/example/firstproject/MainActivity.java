@@ -111,38 +111,7 @@ public class MainActivity extends AppCompatActivity {
         btnNotify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent notificationIntent = new Intent(MainActivity.this, MainActivity.class);
-
-                PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this,
-                        0, notificationIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT);//FLAG_CANCEL_CURRENT
-                NotificationManager notificationManager =
-                        (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-                NotificationCompat.Builder builder =
-                        new NotificationCompat.Builder(MainActivity.this,CHANNEL_ID)
-                                .setSmallIcon(R.mipmap.ic_launcher_round)
-                                .setContentTitle("Авторизация")
-                                .setContentText("Успешная авторизация")
-                                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                                .setContentIntent(pendingIntent)
-                                .setAutoCancel(true);
-                //.addAction(R.mipmap.btnunion,"Открыть",pendingIntent);
-                Notification notification = builder.build();
-
-                Notification notification1 = new Notification.Builder(MainActivity.this,CHANNEL_ID)
-                        .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle("Title")
-                        .setContentText("Notification text")
-                        .setAutoCancel(true).build();
-
-
-                /*NotificationManagerCompat notificationManager =
-                        //(NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                NotificationManagerCompat.from(MainActivity.this);*/
-
-                notificationManager.notify(NOTIFY_ID++,notification);
-                notificationManager.notify(1,notification1);
+                createNotify();
             }
         });
 
@@ -326,6 +295,40 @@ public class MainActivity extends AppCompatActivity {
         user.setEmail("edfyu@gmail.com");
         user.setPassword("qeqwe");
         user.setPhone("sad");
+    }
+    private void createNotify(){
+        Intent notificationIntent = new Intent(MainActivity.this, MainActivity.class);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this,
+                0, notificationIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);//FLAG_CANCEL_CURRENT
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(MainActivity.this,CHANNEL_ID)
+                        .setSmallIcon(R.mipmap.ic_launcher_round)
+                        .setContentTitle("Авторизация")
+                        .setContentText("Успешная авторизация")
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .setContentIntent(pendingIntent)
+                        .setAutoCancel(true);
+        //.addAction(R.mipmap.btnunion,"Открыть",pendingIntent);
+        Notification notification = builder.build();
+
+        Notification notification1 = new Notification.Builder(MainActivity.this,CHANNEL_ID)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("Title")
+                .setContentText("Notification text")
+                .setAutoCancel(true).build();
+
+
+                /*NotificationManagerCompat notificationManager =
+                        //(NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                NotificationManagerCompat.from(MainActivity.this);*/
+
+        notificationManager.notify(NOTIFY_ID++,notification);
+        notificationManager.notify(1,notification1);
     }
 
 

@@ -23,7 +23,7 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
     private EditText Username;
     private EditText Password;
-    boolean verfy=false;
+    boolean verfy = false;
     // Идентификатор уведомления
     private int NOTIFY_ID = 101;
     // Идентификатор канала
@@ -54,27 +54,27 @@ public class LoginActivity extends AppCompatActivity {
             String pass = User[3];
 
         }*/
-        Username=(EditText) findViewById(R.id.fieldUsername);
-        Password=(EditText) findViewById(R.id.fieldPass);
+        Username = (EditText) findViewById(R.id.fieldUsername);
+        Password = (EditText) findViewById(R.id.fieldPass);
         Password.setText("QQq#1234");
 
     }
-    private boolean validateUser(){
-        if(!validatePassword()||!validateUsername()) return false;
+
+    private boolean validateUser() {
+        if (!validatePassword() || !validateUsername()) return false;
         ApiAdd.getInstance().getApi().getUser(Username.getText().toString()).enqueue(new Callback<PostModel.Swagger>() {
             @Override
             public void onResponse(Call<PostModel.Swagger> call, Response<PostModel.Swagger> response) {
                 if (response.isSuccessful()) {
-                    if(response.body().getPassword().equals(Password.getText().toString())){
+                    if (response.body().getPassword().equals(Password.getText().toString())) {
                         Toast.makeText(LoginActivity.this, "Success log in", (int) 0).show();
                         verfy = true;
                     }
 
-                }
-                else{
+                } else {
                     Username.setError("Invalid");
                     Password.setError("Invalid");
-                    Toast.makeText(LoginActivity.this,"Invalid username or password", (int) 0).show();
+                    Toast.makeText(LoginActivity.this, "Invalid username or password", (int) 0).show();
                 }
             }
 
@@ -86,42 +86,44 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         verfy = true;// опять не работает swagger
-        if(!verfy){
+        if (!verfy) {
             return false;
         }
         return true;
     }
 
 
-    public void enter(View v){
-        if(!validateUser()) return;
-        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+    public void enter(View v) {
+        if (!validateUser()) return;
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         Intent notificationIntent = new Intent(LoginActivity.this, MainActivity.class);
         createNotificationChannel();
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                 | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
 
         PendingIntent pendingIntent = PendingIntent.getActivity(LoginActivity.this,
                 0, notificationIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT);//FLAG_CANCEL_CURRENT
+                PendingIntent.FLAG_CANCEL_CURRENT);//FLAG_CANCEL_CURRENT
         createNotificationChannel();
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,CHANNEL_ID)
-                        .setSmallIcon(R.mipmap.ic_launcher_round)
-                        .setLargeIcon(BitmapFactory.decodeResource(getResources(),
-                                R.mipmap.ic_launcher_round))
-                        .setContentTitle("Авторизация")
-                        .setContentText("Успешная авторизация")
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                        .setContentIntent(pendingIntent)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
+                .setContentTitle("Авторизация")
+                .setContentText("Успешная авторизация")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
-                .addAction(R.mipmap.btnunion,"Открыть",pendingIntent);
+                .addAction(R.mipmap.btnunion, "Открыть", pendingIntent);
 
         Notification notification = builder.build();
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                //NotificationManagerCompat.from(LoginActivity.this);
+        //NotificationManagerCompat.from(LoginActivity.this);
 
-        notificationManager.notify(NOTIFY_ID++,notification);
+        notificationManager.notify(NOTIFY_ID++, notification);
 
         startActivity(intent);
         finish();
@@ -137,6 +139,7 @@ public class LoginActivity extends AppCompatActivity {
             return true;
         }
     }
+
     private boolean validatePassword() {
         final String passwordInput = Password.getText().toString().trim();
         if (passwordInput.isEmpty()) {
@@ -147,6 +150,7 @@ public class LoginActivity extends AppCompatActivity {
             return true;
         }
     }
+
     private void createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
@@ -154,7 +158,7 @@ public class LoginActivity extends AppCompatActivity {
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
 
             NotificationChannel defaultChannel = notificationManager.getNotificationChannel(CHANNEL_ID);
-            if(defaultChannel==null) {
+            if (defaultChannel == null) {
                 CharSequence name = getString(R.string.channel_name);
                 String description = getString(R.string.channel_description);
                 int importance = NotificationManager.IMPORTANCE_DEFAULT;
