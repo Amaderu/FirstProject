@@ -16,18 +16,18 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".VideoActivity" />
-        <activity android:name=".Pets">
+        <activity android:name=".Pets"></activity>
+        <activity
+            android:name=".RegActivity"
+            android:label="Registration"
+            android:theme="@style/AppTheme2" />
+        <activity android:name=".LoadScreenActivity2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".RegActivity"
-            android:label="Registration"
-            android:theme="@style/AppTheme2" />
-        <activity android:name=".LoadScreenActivity2" />
         <activity android:name=".MainActivity" />
         <activity android:name=".Authorize" />
         <activity android:name=".LoadScreen" />

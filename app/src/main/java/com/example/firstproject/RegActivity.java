@@ -143,7 +143,7 @@ public class RegActivity extends AppCompatActivity {
         requestGetToSite(Username.getText().toString());
         if(!acessRegist) return;
         final PostModel.Swagger user = new PostModel.Swagger();
-        user.setId(0);
+        user.setId(0);//обязательно
         user.setUsername(Username.getText().toString());
         user.setFirstName(FName.getText().toString());
         user.setLastName(SName.getText().toString());

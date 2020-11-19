@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        verfy = true;// опять не работает swagger
+        //verfy = true;// опять не работает swagger
         if (!verfy) {
             return false;
         }

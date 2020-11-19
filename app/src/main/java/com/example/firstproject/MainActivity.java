@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(@NonNull Call<PostModel.Swagger> call, @NonNull retrofit2.Response<PostModel.Swagger> response) {
                         if (response.isSuccessful()) {
                             PostModel.Swagger postModel = response.body();
-                            int id = postModel.getId();
+                            long id = postModel.getId();
                             String userName = postModel.getUsername();
                             String firstName = postModel.getFirstName();
                             String lastName = postModel.getLastName();

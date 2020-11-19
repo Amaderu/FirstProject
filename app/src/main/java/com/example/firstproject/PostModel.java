@@ -56,7 +56,7 @@ public class PostModel {
     public static class Swagger{
     @SerializedName("id")
     @Expose
-    private int id;
+    private long id;
     @SerializedName("username")
     @Expose
     private String username;
@@ -88,7 +88,7 @@ public class PostModel {
         this.userStatus=0;
     }
 
-    Swagger(int id,String firstName,String lastName,String email,String password,String phone, int userStatus) {
+    Swagger(long id,String firstName,String lastName,String email,String password,String phone, int userStatus) {
         this.id=id;
         this.firstName=firstName;
         this.lastName=lastName;
@@ -98,7 +98,7 @@ public class PostModel {
         this.userStatus=userStatus;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

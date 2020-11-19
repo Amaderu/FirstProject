@@ -29,7 +29,7 @@ public class Pets extends AppCompatActivity {
     Button btn;
     EditText responseTextView;
     TextView amountRes;
-    List<PetResponse> pets;
+    public List<PetResponse> pets;
 
     String[] Category = {"Cats","dogs","Cats","dogs","Cats","dogs"};
     //String[] Category;
@@ -60,8 +60,12 @@ public class Pets extends AppCompatActivity {
             }
         };
         btn.setOnClickListener(oclBtnFind);
-        requestfindByStatus("sold");
-        //programmAdapter = new programmAdapter(this,Category,Names,images);
+        //requestfindByStatus("sold");
+        /*if(!pets.isEmpty()){
+            programmAdapter = new programmAdapter(this,pets);
+            recyclerView.setAdapter(programmAdapter);
+        }*/
+        //programmAdapter = new programmAdapter(this,pets);
         recyclerView.setAdapter(programmAdapter);
 
 
